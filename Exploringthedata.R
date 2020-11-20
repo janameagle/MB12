@@ -70,6 +70,7 @@ skinny
 
 # Jakobs Analysis
 # load data
+data <-read.csv("data/day2_data_energy_prod_EU_2020-08-03_2020-08-09.csv")
 
 # summary
 summary(data)
@@ -78,6 +79,7 @@ colnames(data)
 
 # categorical variables
 unique(data$MapCode)
+unique(data$GenerationUnitEIC)
 length(unique(data$GenerationUnitEIC))
 
 # actual vs. installed capacity
@@ -98,8 +100,9 @@ counts
 
 # aggregate Generation by day
 prod_by_day <- aggregate(data$ActualGenerationOutput,
-          by = list(Day = data$Day), FUN = sum,
-          na.rm = T)
+                         by = list(Day = data$Day), 
+                         FUN = sum,
+                         na.rm = T)
 
 prod_by_day$x <- prod_by_day$x * 0.001 #gigawatt
 
@@ -107,10 +110,12 @@ plot(x=prod_by_day$Day, y=prod_by_day$x)
 
 # aggregate installed capacity by day
 cap_by_day <- aggregate(data$InstalledGenCapacity,
-                         by = list(Day = data$Day), FUN = sum,
+                         by = list(Day = data$Day), 
+                         FUN = sum,
                          na.rm = T)
 
 cap_by_day$x <- cap_by_day$x * 0.001 #gigawatt
 
 plot(x=cap_by_day$Day, y=cap_by_day$x)
+
 
